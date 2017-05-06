@@ -14,8 +14,14 @@ Template.body.onCreated(function(){
 });
 
 Tracker.autorun(() => {
-  Meteor.subscribe('user_reactions', Session.get('userid'));
+  Meteor.subscribe('user_reactions', Session.get('userid'),
+          { onReady: draw }
+  );
 });
+
+function draw() {
+    visualizations.createHigh(UserData.findOne({"name" : Session.get('userid')}));
+}
 
 Template.body.helpers({
 });
@@ -35,8 +41,8 @@ Template.body.events({
 
     // update the templateId - whis will cause the autorun to execute again
 
-    //visualizations.insert(returnText);
-    visualizations.createHigh(UserData.findOne({"name" : Session.get('userid')}));
+    Session.set('userid', 'Chris Tril')
+
     },
 });
 

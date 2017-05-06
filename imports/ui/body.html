@@ -1,0 +1,29 @@
+<body>
+    <!-- Wrapper -->
+        <div id="wrapper">
+            <!-- Header -->
+                <header id="header">
+                    <div class="inner">
+                    </div>
+                </header>
+
+            <!-- Main -->
+                <div id="main">
+                    <div class="inner">
+                        <header>
+                            <h1><!--[-->Placeholder name<!--]--></h1>
+                            <p>If you need to know how to find your facebook id, look <a href="http://findmyfbid.in/">here</a>.</p>
+                        </header>
+                        <form class="user-id" style="width:500px; margin-left: auto; margin-right: auto;">
+                            <input type="text" name="text" placeholder="Full name or Facebook ID number" />
+                        </form>
+                        {{#if Template.subscriptionsReady}}
+                            {{> visualizations}}
+                        {{else}}
+                            Loading...
+                        {{/if}}
+                    </div>
+                </div>
+        </div>
+
+</body>

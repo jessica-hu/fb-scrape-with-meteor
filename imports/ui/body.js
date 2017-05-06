@@ -32,7 +32,9 @@ Template.body.events({
     event.preventDefault();
 
     // Get value from form element
-    var value = $(event.target).val();
+    const target = event.target;
+    const text = target.text.value;
+
     /*if (isNaN(parseFloat(text)) || !isFinite(text)) { //if user inputs a name
         var returnText = JSON.stringify(UserData.findOne({ 'name' : text}));
     } else {
@@ -41,8 +43,7 @@ Template.body.events({
 
     // update the templateId - whis will cause the autorun to execute again
 
-    Session.set('userid', 'Chris Tril')
-
+    Session.set('userid', text);
     },
 });
 

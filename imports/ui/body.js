@@ -20,7 +20,12 @@ Tracker.autorun(() => {
 });
 
 function draw() {
-    visualizations.createHigh(UserData.findOne({"name" : Session.get('userid')}));
+    var input = UserData.findOne({"name" : Session.get('userid')});
+    if (input) {
+        visualizations.createHigh(input);
+    } else {
+        console.log( 'ASDFJAOIDFJIASJD')
+    }
 }
 
 Template.body.helpers({

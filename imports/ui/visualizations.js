@@ -2,7 +2,6 @@ import Highcharts from 'highcharts';
 import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
-import { PostData, UserData } from '../lib/api/database.js';
 
 import './visualizations.html';
 

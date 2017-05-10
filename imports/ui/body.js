@@ -7,24 +7,48 @@ import { PostData, UserData } from '../lib/api/database.js';
 import './body.html';
 const visualizations = require('./visualizations');
 
-Template.body.onCreated(function(){
-    Session.set('userid', 'Seth Van Doren');
 
+//443809049300463
+if(Meteor.isClient) {
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '443809049300463',
+      status     : true,
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+  };
+}
+
+
+Template.body.onCreated(function(){
+    Session.setDefault('userid', 'CHRIS TRIL');
     console.log(Session.get('userid'));
 });
 
 Tracker.autorun(() => {
   Meteor.subscribe('user_reactions', Session.get('userid'),
-          { onReady: draw }
+          { onReady: draw() }
   );
 });
 
 function draw() {
     var input = UserData.findOne({"name" : Session.get('userid')});
+
     if (input) {
-        visualizations.createHigh(input);
+        visualizations.createReactBar(input);
+        FB.api(
+          "/" + input._id + "/picture?type=large",
+          function (response) {
+            if (response && !response.error) {
+              var elem = document.createElement("picture");
+              elem.setAttribute("src", response.data.url);
+              document.getElementById("image-cropper").appendChild(elem);
+            }
+          }
+        );
     } else {
-        console.log( 'ASDFJAOIDFJIASJD')
+        console.log('what r u doin')
     }
 }
 
@@ -33,20 +57,11 @@ Template.body.helpers({
 
 Template.body.events({
   'submit .user-id'(event) {
-    // Prevent default browser form submit
     event.preventDefault();
 
     // Get value from form element
     const target = event.target;
-    const text = target.text.value;
-
-    /*if (isNaN(parseFloat(text)) || !isFinite(text)) { //if user inputs a name
-        var returnText = JSON.stringify(UserData.findOne({ 'name' : text}));
-    } else {
-        var returnText = JSON.stringify(UserData.findOne({ '_id' : text}));
-    }*/
-
-    // update the templateId - whis will cause the autorun to execute again
+    const text = target.text.value.toUpperCase();
 
     Session.set('userid', text);
     },
